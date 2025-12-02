@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "998735229160",
+    "project_id": "xenvets-644f6",
+    "storage_bucket": "xenvets-644f6.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:998735229160:android:484f4bfb634b1597e5d95d",
+        "android_client_info": {
+          "package_name": "com.example.xevents"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb4payTYhNQAxfu0Z36TJcP0bYlr-EsJg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
