@@ -16,7 +16,7 @@ class AttendeesPage extends StatelessWidget {
         builder: (context, snapshot) {
           if (!snapshot.hasData) return const Center(child: CircularProgressIndicator());
           final items = snapshot.data!;
-          if (items.isEmpty) return const Center(child: Text('No attendees yet'));
+          if (items.isEmpty) return const Center(child: Text('Ainda não possui inscritos...'));
           return ListView.builder(
             itemCount: items.length,
             itemBuilder: (context, i) {

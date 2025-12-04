@@ -10,6 +10,7 @@ class EventModel {
   final double price;
   final String imageUrl;
   final DateTime createdAt;
+  final bool isClosed;
 
   EventModel({
     required this.id,
@@ -21,6 +22,7 @@ class EventModel {
     required this.price,
     required this.imageUrl,
     required this.createdAt,
+    required this.isClosed,
   });
 
   factory EventModel.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -28,13 +30,14 @@ class EventModel {
     return EventModel(
       id: doc.id,
       speakerId: data['speakerId'] ?? '',
-      title: data['title'] ?? '',
-      description: data['description'] ?? '',
+      title: data['title'] ?? 'Título não disponível',
+      description: data['description'] ?? 'Descrição não disponível',
       date: (data['date'] as Timestamp).toDate(),
-      location: data['location'] ?? '',
+      location: data['location'] ?? 'Ainda não temos a localização definida...',
       price: (data['price'] as num).toDouble(),
       imageUrl: data['imageUrl'] ?? '',
       createdAt: (data['createdAt'] as Timestamp).toDate(),
+      isClosed: data['isClosed'] ?? false,
     );
   }
 
@@ -47,5 +50,6 @@ class EventModel {
         'price': price,
         'imageUrl': imageUrl,
         'createdAt': Timestamp.fromDate(createdAt),
+        'isClosed': isClosed,
       };
 }

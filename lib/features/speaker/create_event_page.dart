@@ -65,6 +65,7 @@ class _CreateEventPageState extends ConsumerState<CreateEventPage> {
                         price: double.tryParse(_price.text) ?? 0.0,
                         imageUrl: '',
                         createdAt: now,
+                        isClosed: false,
                       );
                               String? error;
                               try {

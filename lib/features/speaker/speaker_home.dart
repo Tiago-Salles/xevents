@@ -32,8 +32,14 @@ class SpeakerHome extends ConsumerWidget {
             itemBuilder: (context, i) {
               final e = events[i];
               return ListTile(
-                title: Text(e.title),
-                subtitle: Text(e.location),
+                tileColor: Colors.brown,
+                title: Text(e.title, style: TextStyle(
+                  color: Colors.black,
+                ),),
+                subtitle: Text(e.location, style: TextStyle(
+                  color: Colors.black,
+                ),),
+                trailing: Text(e.isClosed ? "Fechado": "Aberto", style: TextStyle(color: Colors.black)),
                 onTap: () => context.push('/speaker/event/${e.id}'),
               );
             },

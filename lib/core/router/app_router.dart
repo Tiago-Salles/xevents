@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:xevents/features/speaker/attendees_page.dart';
 import 'package:xevents/services/auth_service.dart';
 import '../../features/auth/login_page.dart';
 import '../../features/auth/register_page.dart';
@@ -26,6 +27,7 @@ class AppRouter {
         GoRoute(path: '/speaker/home', builder: (context, state) => const SpeakerHome()),
         GoRoute(path: '/speaker/event/create', builder: (context, state) => const CreateEventPage()),
         GoRoute(path: '/speaker/event/:id', builder: (context, state) => EventDetailsSpeaker(eventId: state.pathParameters['id']!)),
+        GoRoute(path: '/speaker/event/:id/attendees', builder: (context, state) => AttendeesPage(eventId: state.pathParameters['id']!)),
 
         // Customer routes
         GoRoute(path: '/customer/home', builder: (context, state) => const CatalogPage()),

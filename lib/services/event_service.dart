@@ -17,8 +17,12 @@ class EventService {
   }
 
   Stream<List<EventModel>> getEventsForSpeaker(String speakerId) {
-    return _col.where('speakerId', isEqualTo: speakerId).orderBy('date').snapshots().map((snap) =>
-        snap.docs.map((d) => EventModel.fromDoc(d as DocumentSnapshot<Map<String, dynamic>>)).toList());
+    try {
+      return _col.where('speakerId', isEqualTo: speakerId).orderBy('date').snapshots().map((snap) =>
+          snap.docs.map((d) => EventModel.fromDoc(d as DocumentSnapshot<Map<String, dynamic>>)).toList());
+    } catch (e) {
+      rethrow;
+    }
   }
 
   Future<EventModel?> getEventById(String id) async {
