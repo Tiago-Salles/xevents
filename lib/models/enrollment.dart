@@ -7,6 +7,7 @@ class Enrollment {
   final DateTime purchaseDate;
   final String extraInfo;
   final String status;
+  final String eventId;
 
   Enrollment({
     required this.id,
@@ -15,6 +16,7 @@ class Enrollment {
     required this.purchaseDate,
     required this.extraInfo,
     required this.status,
+    required this.eventId,
   });
 
   factory Enrollment.fromDoc(DocumentSnapshot<Map<String, dynamic>> doc) {
@@ -26,6 +28,7 @@ class Enrollment {
       purchaseDate: (data['purchaseDate'] as Timestamp).toDate(),
       extraInfo: data['extraInfo'] ?? '',
       status: data['status'] ?? 'confirmed',
+      eventId: data['eventId'] ?? '',
     );
   }
 
@@ -35,5 +38,6 @@ class Enrollment {
         'purchaseDate': Timestamp.fromDate(purchaseDate),
         'extraInfo': extraInfo,
         'status': status,
+        'eventId': eventId,
       };
 }

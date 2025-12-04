@@ -23,7 +23,7 @@ class CatalogPage extends StatelessWidget {
               final e = events[i];
               return ListTile(
                 title: Text(e.title),
-                subtitle: Text('\${e.location} • \\${e.price}'),
+                subtitle: Text('${e.location} • ${e.price}'),
                 onTap: () => context.push('/customer/event/${e.id}'),
               );
             },

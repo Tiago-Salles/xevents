@@ -5,7 +5,7 @@ import '../../services/event_service.dart';
 import '../../services/enrollment_service.dart';
 import '../../models/event_model.dart';
 import '../../models/enrollment.dart';
-
+import 'package:go_router/go_router.dart';
 
 class EventDetailsCustomer extends ConsumerStatefulWidget {
   final String eventId;
@@ -54,31 +54,46 @@ class _EventDetailsCustomerState extends ConsumerState<EventDetailsCustomer> {
           const SizedBox(height: 8),
           Text('Price: \\${_event!.price.toStringAsFixed(2)}'),
           const SizedBox(height: 12),
-          ElevatedButton(
-            onPressed: () async {
-              if (uid == null) return;
-              final enrollment = Enrollment(
-                id: '',
-                customerId: uid,
-                pricePaid: _event!.price,
-                purchaseDate: DateTime.now(),
-                extraInfo: '',
-                status: 'confirmed',
+          StreamBuilder<List<Enrollment>>(
+                  stream: EnrollmentService().getEnrollmentsForCustomer(uid!),
+                  builder: (context, asyncSnapshot) {
+                  bool isEnrolled = false;
+                                  final enrollments = asyncSnapshot.data;
+                    if ((enrollments ?? []).where((e) => e.eventId == _event!.id).isNotEmpty){
+                      isEnrolled = true;
+                    } 
+              return ElevatedButton(
+                onPressed: () async {
+                  if(isEnrolled){
+                    context.push('/customer/my-events');
+                    return;
+                  }
+                  if (uid == null) return;
+                  final enrollment = Enrollment(
+                    id: '',
+                    customerId: uid,
+                    pricePaid: _event!.price,
+                    purchaseDate: DateTime.now(),
+                    extraInfo: '',
+                    status: 'confirmed',
+                    eventId: _event!.id,
+                  );
+                  String? error;
+                  try {
+                    await EnrollmentService().enrollCustomer(eventId: _event!.id, enrollment: enrollment);
+                    if (!mounted) return;
+                  } catch (e) {
+                    error = e.toString();
+                  }
+                  if (error == null) {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Purchase placeholder completed')));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Purchase failed: $error')));
+                  }
+                },
+                child: isEnrolled ? Text("Ver evento") : Text("Vou fazer parte disso"),
               );
-              String? error;
-              try {
-                await EnrollmentService().enrollCustomer(eventId: _event!.id, enrollment: enrollment);
-                if (!mounted) return;
-              } catch (e) {
-                error = e.toString();
-              }
-              if (error == null) {
-                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Purchase placeholder completed')));
-              } else {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Purchase failed: $error')));
-              }
-            },
-            child: const Text('Purchase (placeholder)'),
+            }
           )
         ]),
       ),
